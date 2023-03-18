@@ -1,10 +1,9 @@
 
 var InitialLoad = async () => {
-
     let params = (new URL(document.location)).searchParams;
     let id = params.get("id");
     if (id != null) {
-        var emp = await GetRequest(id);
+        var emp = await GetData(id);
         if (emp != null) {
             Get('#name').value = emp.name;
             Get('#salary').value = emp.salary;
@@ -60,37 +59,11 @@ function save() {
     emp.gender = GetGender('[name=gender]');
     emp.name = nameElement.value;
     emp.profilePic = GetImageSrc('[name=profile]');
-    // postData(url, emp)
-    Postrequest(emp);
+     postData(url, emp)
     window.location.replace("http://127.0.0.1:5500/home.html")
     return true;
 }
 
-
-function GetData(url) {
-    let Data;
-    fetch(url)
-        .then((response) => response.json())
-        .then((data) => Data = data) 
-    return Data
-}
-function postData(url, data) {
-
-    fetch(url, {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-    })
-        .then((response) => response.json())
-        .then((data) => {
-            console.log("Success:", data);
-        })
-        .catch((error) => {
-            console.error("Error:", error);
-        });
-}
 
 function Get(id) {
     return document.querySelector(id);
